@@ -549,6 +549,12 @@ public class FlinkOptions extends HoodieConfig {
   // ------------------------------------------------------------------------
   //  Hive Sync Options
   // ------------------------------------------------------------------------
+  public static final ConfigOption<String> HIVE_SYNC_CONF_FILE = ConfigOptions
+          .key("hive_sync.conf.file")
+          .stringType()
+          .defaultValue("")
+          .withDescription("hive-site.xml path default value ''");
+  
   public static final ConfigOption<Boolean> HIVE_SYNC_ENABLED = ConfigOptions
       .key("hive_sync.enable")
       .booleanType()

@@ -30,6 +30,9 @@ import java.util.List;
  * Configs needed to sync data into Hive.
  */
 public class HiveSyncConfig implements Serializable {
+  
+  @Parameter(names = {"--conf-file"}, description = "path of the Hive conf file")
+  public String confFile;
 
   @Parameter(names = {"--database"}, description = "name of the target database in Hive", required = true)
   public String databaseName;
