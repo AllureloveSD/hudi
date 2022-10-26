@@ -105,7 +105,7 @@
                                     <include>org.apache.parquet:parquet-encoding</include>
                                     <include>org.apache.parquet:parquet-jackson</include>
                                     
-                                    <!--                                    <include>org.apache.avro:avro</include>-->
+                                    <include>org.apache.avro:avro</include>
                                     <include>joda-time:joda-time</include>
                                     <include>com.fasterxml.jackson.core:jackson-annotations</include>
                                     <include>com.fasterxml.jackson.core:jackson-databind</include>
@@ -141,7 +141,7 @@
                                     <include>org.apache.hive:hive-common</include>
                                     <include>org.apache.hive:hive-service</include>
                                     <include>org.apache.hive:hive-service-rpc</include>
-                                    <!--                  <include>org.apache.hive:hive-exec</include>-->
+                                    <!--                                    <include>org.apache.hive:hive-exec</include>-->
                                     <include>org.apache.hive:hive-metastore</include>
                                     <include>org.apache.hive:hive-jdbc</include>
                                     <include>org.datanucleus:datanucleus-core</include>
@@ -164,10 +164,10 @@
                                     <pattern>javax.servlet.</pattern>
                                     <shadedPattern>${flink.bundle.shade.prefix}javax.servlet.</shadedPattern>
                                 </relocation>
-                                <!--                                <relocation>-->
-                                <!--                                    <pattern>org.apache.avro.</pattern>-->
-                                <!--                                    <shadedPattern>${flink.bundle.shade.prefix}org.apache.avro.</shadedPattern>-->
-                                <!--                                </relocation>-->
+                                <relocation>
+                                    <pattern>org.apache.avro.</pattern>
+                                    <shadedPattern>${flink.bundle.shade.prefix}org.apache.avro.</shadedPattern>
+                                </relocation>
                                 <!--                                <relocation>-->
                                 <!--                                    <pattern>org.apache.parquet.</pattern>-->
                                 <!--                                    <shadedPattern>${flink.bundle.shade.prefix}org.apache.parquet.</shadedPattern>-->
