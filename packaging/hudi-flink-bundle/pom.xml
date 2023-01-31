@@ -97,9 +97,9 @@
                                     <include>org.apache.httpcomponents:fluent-hc</include>
                                     <include>org.antlr:stringtemplate</include>
                                     <!-- Parquet -->
-                                    <!--                                    <include>org.apache.parquet:parquet-avro</include>-->
+                                    <include>org.apache.parquet:parquet-avro</include>
                                     <include>org.apache.parquet:parquet-hadoop</include>
-                                    <!--                                    <include>org.apache.parquet:parquet-column</include>-->
+                                    <include>org.apache.parquet:parquet-column</include>
                                     <include>org.apache.parquet:parquet-common</include>
                                     <include>org.apache.parquet:parquet-format-structures</include>
                                     <include>org.apache.parquet:parquet-encoding</include>
@@ -168,10 +168,10 @@
                                     <pattern>org.apache.avro.</pattern>
                                     <shadedPattern>${flink.bundle.shade.prefix}org.apache.avro.</shadedPattern>
                                 </relocation>
-                                <!--                                <relocation>-->
-                                <!--                                    <pattern>org.apache.parquet.</pattern>-->
-                                <!--                                    <shadedPattern>${flink.bundle.shade.prefix}org.apache.parquet.</shadedPattern>-->
-                                <!--                                </relocation>-->
+                                <relocation>
+                                    <pattern>org.apache.parquet.</pattern>
+                                    <shadedPattern>${flink.bundle.shade.prefix}org.apache.parquet.</shadedPattern>
+                                </relocation>
                                 <relocation>
                                     <pattern>com.yammer.metrics.</pattern>
                                     <shadedPattern>${flink.bundle.shade.prefix}com.yammer.metrics.</shadedPattern>
