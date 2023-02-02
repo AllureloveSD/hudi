@@ -23,6 +23,7 @@ import org.apache.avro.generic.IndexedRecord;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hudi.avro.HoodieAvroWriteSupport;
 import org.apache.hudi.common.fs.inline.InLineFSUtils;
@@ -107,7 +108,7 @@ public class HoodieParquetDataBlock extends HoodieDataBlock {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    try (FSDataOutputStream outputStream = new FSDataOutputStream(baos)) {
+    try (FSDataOutputStream outputStream = new FSDataOutputStream(baos,null)) {
       try (HoodieParquetStreamWriter<IndexedRecord> parquetWriter = new HoodieParquetStreamWriter<>(outputStream, avroParquetConfig)) {
         for (IndexedRecord record : records) {
           String recordKey = getRecordKey(record).orElse(null);

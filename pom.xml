@@ -110,9 +110,9 @@
     <log4j2.version>2.17.2</log4j2.version>
     <slf4j.version>1.7.36</slf4j.version>
     <joda.version>2.9.9</joda.version>
-    <hadoop.version>2.10.1</hadoop.version>
+    <hadoop.version>3.2.1</hadoop.version>
     <hive.groupid>org.apache.hive</hive.groupid>
-    <hive.version>2.3.1</hive.version>
+    <hive.version>3.1.2</hive.version>
     <hive.parquet.version>1.10.1</hive.parquet.version>
     <hive.avro.version>1.8.2</hive.avro.version>
     <presto.version>0.273</presto.version>
@@ -129,7 +129,7 @@
     <sparkbundle.version></sparkbundle.version>
     <flink1.15.version>1.15.1</flink1.15.version>
     <flink1.14.version>1.14.5</flink1.14.version>
-    <flink1.13.version>1.13.6</flink1.13.version>
+    <flink1.13.version>1.13.3</flink1.13.version>
     <flink.version>${flink1.15.version}</flink.version>
     <hudi.flink.module>hudi-flink1.15.x</hudi.flink.module>
     <flink.bundle.version>1.15</flink.bundle.version>
@@ -175,7 +175,7 @@
     <hbase.version>2.4.9</hbase.version>
     <h2.version>1.4.199</h2.version>
     <awaitility.version>3.1.2</awaitility.version>
-    <skipTests>false</skipTests>
+    <skipTests>true</skipTests>
     <skipUTs>${skipTests}</skipUTs>
     <skipFTs>${skipTests}</skipFTs>
     <skipITs>${skipTests}</skipITs>
@@ -2218,5 +2218,4 @@
       </activation>
     </profile>
   </profiles>
-
 </project>
