@@ -70,7 +70,12 @@ public class FlinkOptions extends HoodieConfig {
   // ------------------------------------------------------------------------
   //  Base Options
   // ------------------------------------------------------------------------
-
+  public static final ConfigOption<String> HIVE_SYNC_CONF_FILE = ConfigOptions
+          .key("hive_sync.conf.file")
+          .stringType()
+          .defaultValue("")
+          .withDescription("hive-site.xml path default value ''");
+  
   public static final ConfigOption<String> PATH = ConfigOptions
       .key("path")
       .stringType()

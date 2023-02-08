@@ -64,6 +64,11 @@ public class HoodieSyncConfig extends HoodieConfig {
       .key("hoodie.datasource.meta.sync.enable")
       .defaultValue("false")
       .withDocumentation("Enable Syncing the Hudi Table with an external meta store or data catalog.");
+  
+  public static final ConfigProperty<String> HIVE_SYNC_CONF_FILE = ConfigProperty
+          .key("hoodie.datasource.hive_sync.conf_file")
+          .defaultValue("")
+          .withDocumentation("hive conf file path.");
 
   // ToDo change the prefix of the following configs from hive_sync to meta_sync
   public static final ConfigProperty<String> META_SYNC_DATABASE_NAME = ConfigProperty

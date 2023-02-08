@@ -167,7 +167,11 @@
                 </relocation>
                 <relocation>
                   <pattern>org.apache.avro.</pattern>
-                  <shadedPattern>${flink.bundle.shade.prefix}org.apache.avro.</shadedPattern>
+                  <shadedPattern>${flink.bundle.shade.prefix}nimbus.org.apache.avro.</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.parquet.</pattern>
+                  <shadedPattern>${flink.bundle.shade.prefix}nimbus.org.apache.parquet.</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>org.apache.commons.io.</pattern>

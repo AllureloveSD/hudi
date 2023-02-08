@@ -18,9 +18,11 @@
 
 package org.apache.hudi.sink.utils;
 
+import org.apache.hadoop.fs.FsUrlStreamHandlerFactory;
 import org.apache.hudi.aws.sync.AwsGlueCatalogSyncTool;
 import org.apache.hudi.common.config.SerializableConfiguration;
 import org.apache.hudi.common.config.TypedProperties;
+import org.apache.hudi.common.util.StringUtils;
 import org.apache.hudi.configuration.FlinkOptions;
 import org.apache.hudi.configuration.HadoopConfigurations;
 import org.apache.hudi.hive.HiveSyncTool;
@@ -32,6 +34,11 @@ import org.apache.flink.annotation.VisibleForTesting;
 import org.apache.flink.configuration.Configuration;
 import org.apache.hadoop.hive.conf.HiveConf;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.Properties;
 
 import static org.apache.hudi.hive.HiveSyncConfigHolder.HIVE_AUTO_CREATE_DATABASE;
@@ -47,6 +54,7 @@ import static org.apache.hudi.hive.HiveSyncConfigHolder.HIVE_USER;
 import static org.apache.hudi.hive.HiveSyncConfigHolder.HIVE_USE_JDBC;
 import static org.apache.hudi.hive.HiveSyncConfigHolder.HIVE_USE_PRE_APACHE_INPUT_FORMAT;
 import static org.apache.hudi.hive.HiveSyncConfigHolder.METASTORE_URIS;
+import static org.apache.hudi.sync.common.HoodieSyncConfig.HIVE_SYNC_CONF_FILE;
 import static org.apache.hudi.sync.common.HoodieSyncConfig.META_SYNC_ASSUME_DATE_PARTITION;
 import static org.apache.hudi.sync.common.HoodieSyncConfig.META_SYNC_BASE_FILE_FORMAT;
 import static org.apache.hudi.sync.common.HoodieSyncConfig.META_SYNC_BASE_PATH;
@@ -85,16 +93,38 @@ public class HiveSyncContext {
     org.apache.hadoop.conf.Configuration hadoopConf = HadoopConfigurations.getHadoopConf(conf);
     HiveConf hiveConf = new HiveConf();
     hiveConf.addResource(serConf.get());
+    String confFile = props.getProperty(HIVE_SYNC_CONF_FILE.key());
+    if (!StringUtils.isNullOrEmpty(confFile)) {
+      hiveConf.addResource(pathToUrl(confFile));
+    }
     if (!FlinkOptions.isDefaultValueDefined(conf, FlinkOptions.HIVE_SYNC_METASTORE_URIS)) {
       hadoopConf.set(HiveConf.ConfVars.METASTOREURIS.varname, conf.getString(FlinkOptions.HIVE_SYNC_METASTORE_URIS));
     }
     hiveConf.addResource(hadoopConf);
     return new HiveSyncContext(props, hiveConf);
   }
+  
+  private static URL pathToUrl(String path) {
+    org.apache.hadoop.conf.Configuration configuration = new org.apache.hadoop.conf.Configuration();
+    configuration.set("dfs.client.use.datanode.hostname", "true");
+    try {
+      if (path.startsWith("hdfs://")) {
+        FsUrlStreamHandlerFactory factory = new FsUrlStreamHandlerFactory(configuration);
+        URLStreamHandler hdfs = factory.createURLStreamHandler("hdfs");
+        URI uri = new URI(path);
+        return new URL(uri.getScheme(), uri.getHost(), uri.getPort(), uri.getPath(), hdfs);
+      } else {
+        return new URL(path);
+      }
+    } catch (MalformedURLException | URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   @VisibleForTesting
   public static Properties buildSyncConfig(Configuration conf) {
     TypedProperties props = StreamerUtil.flinkConf2TypedProperties(conf);
+    props.setPropertyIfNonNull(HIVE_SYNC_CONF_FILE.key(), conf.getString(FlinkOptions.HIVE_SYNC_CONF_FILE));
     props.setPropertyIfNonNull(META_SYNC_BASE_PATH.key(), conf.getString(FlinkOptions.PATH));
     props.setPropertyIfNonNull(META_SYNC_BASE_FILE_FORMAT.key(), conf.getString(FlinkOptions.HIVE_SYNC_FILE_FORMAT));
     props.setPropertyIfNonNull(HIVE_USE_PRE_APACHE_INPUT_FORMAT.key(), "false");

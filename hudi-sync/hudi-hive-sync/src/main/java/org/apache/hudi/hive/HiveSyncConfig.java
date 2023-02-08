@@ -95,7 +95,10 @@ public class HiveSyncConfig extends HoodieSyncConfig {
 
     @ParametersDelegate()
     public final HoodieSyncConfigParams hoodieSyncConfigParams = new HoodieSyncConfigParams();
-
+  
+    @Parameter(names = {"--conf-file"}, description = "path of the Hive conf file")
+    public String confFile;
+    
     @Parameter(names = {"--user"}, description = "Hive username")
     public String hiveUser;
     @Parameter(names = {"--pass"}, description = "Hive password")
